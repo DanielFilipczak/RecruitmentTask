@@ -24,7 +24,8 @@ public class Child {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     Parent parent;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schoolId")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     School school;
 }

@@ -32,4 +32,14 @@ public class SchoolController {
     public ResponseEntity<?> getSchoolById(@PathVariable Integer id) {
         return ResponseEntity.ok(schoolService.getSchoolById(id));
     }
+
+    @GetMapping("/settlements/{id}/{month}")
+    public ResponseEntity<?> getMonthlySchoolSettlement(@PathVariable Integer id, @PathVariable int month) {
+        return ResponseEntity.ok(schoolService.getSchoolSettlementByMonth(id, month));
+    }
+
+    @GetMapping("/settlements/{id}/{month}/{parentId}")
+    public ResponseEntity<?> getMonthlyParentSettlement(@PathVariable Integer id, @PathVariable int month, @PathVariable Integer parentId) {
+        return ResponseEntity.ok(schoolService.getParentSettlementByMonth(id, month, parentId));
+    }
 }

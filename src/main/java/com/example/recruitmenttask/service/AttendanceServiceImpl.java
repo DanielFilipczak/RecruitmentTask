@@ -17,7 +17,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public void saveAttendance(Attendance attendance) {
-        attendanceRepo.save(attendance);
+        if (attendance.isValid())
+            attendanceRepo.save(attendance);
     }
 
     @Override

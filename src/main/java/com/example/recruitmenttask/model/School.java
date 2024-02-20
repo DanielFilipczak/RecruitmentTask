@@ -15,6 +15,6 @@ public class School {
     @Column(nullable = false)
     String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 2)
     float hour_price;
 }
