@@ -2,7 +2,9 @@ package com.example.recruitmenttask.service;
 
 import com.example.recruitmenttask.model.Attendance;
 import com.example.recruitmenttask.repository.AttendanceRepo;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,9 +18,8 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public void saveAttendance(Attendance attendance) {
-        if (attendance.isValid())
-            attendanceRepo.save(attendance);
+    public Attendance saveAttendance(Attendance attendance) {
+        return attendanceRepo.save(attendance);
     }
 
     @Override
@@ -28,6 +29,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Attendance getAttendanceById(Integer id) {
-        return attendanceRepo.findById(id).orElse(null);
+        if (attendanceRepo.existsById(id)) return attendanceRepo.findById(id).get();
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid id");
     }
 }

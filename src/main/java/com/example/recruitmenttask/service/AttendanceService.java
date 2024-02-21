@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AttendanceService {
 
-    void saveAttendance(Attendance attendance);
+    Attendance saveAttendance(Attendance attendance);
     List<Attendance> getAllAttendances();
     Attendance getAttendanceById(Integer id);
 }

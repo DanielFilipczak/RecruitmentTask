@@ -2,7 +2,9 @@ package com.example.recruitmenttask.service;
 
 import com.example.recruitmenttask.model.Child;
 import com.example.recruitmenttask.repository.ChildRepo;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -15,8 +17,8 @@ public class ChildServiceImpl implements ChildService {
     }
 
     @Override
-    public void saveChild(Child child) {
-        childRepo.save(child);
+    public Child saveChild(Child child) {
+       return childRepo.save(child);
     }
 
     @Override
@@ -26,6 +28,7 @@ public class ChildServiceImpl implements ChildService {
 
     @Override
     public Child getChildById(Integer id) {
-        return childRepo.findById(id).orElse(null);
+        if (childRepo.existsById(id)) return childRepo.findById(id).get();
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid id");
     }
 }

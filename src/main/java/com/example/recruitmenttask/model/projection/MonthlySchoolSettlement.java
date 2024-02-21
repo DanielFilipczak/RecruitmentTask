@@ -1,16 +1,12 @@
 package com.example.recruitmenttask.model.projection;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class MonthlySchoolSettlement {
     String name;
     String month;
     float totalSum;
-
-    public MonthlySchoolSettlement(String name, String month, float totalSum) {
-        this.name = name;
-        this.month = month;
-        this.totalSum = totalSum;
-    }
 }

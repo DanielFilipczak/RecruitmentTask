@@ -2,10 +2,11 @@ package com.example.recruitmenttask.controller;
 
 import com.example.recruitmenttask.model.Attendance;
 import com.example.recruitmenttask.service.AttendanceService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/attendances")
@@ -18,18 +19,19 @@ public class AttendanceController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addAttendance(@RequestBody Attendance attendance) {
-        attendanceService.saveAttendance(attendance);
-        return ResponseEntity.created(URI.create("/attendances/" + attendance.getId())).build();
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Attendance addAttendance(@RequestBody Attendance attendance) {
+        if (attendance.isValid()) return attendanceService.saveAttendance(attendance);
+        else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid data");
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllAttendances() {
-        return ResponseEntity.ok(attendanceService.getAllAttendances());
+    public List<Attendance> getAllAttendances() {
+        return attendanceService.getAllAttendances();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getAttendanceById(@PathVariable Integer id) {
-        return ResponseEntity.ok(attendanceService.getAttendanceById(id));
+    public Attendance getAttendanceById(@PathVariable Integer id) {
+        return attendanceService.getAttendanceById(id);
     }
 }

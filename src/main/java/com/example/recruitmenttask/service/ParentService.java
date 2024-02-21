@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ParentService {
 
-    void saveParent(Parent parent);
+    Parent saveParent(Parent parent);
     List<Parent> getAllParents();
     Parent getParentById(Integer id);
 }

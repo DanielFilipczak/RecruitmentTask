@@ -2,13 +2,17 @@ package com.example.recruitmenttask.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.AssertTrue;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Attendance {
 
     @Id
@@ -16,17 +20,17 @@ public class Attendance {
     Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "childId")
+    @JoinColumn(name = "childId", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     Child child;
 
-    @Column(nullable = false)
-    LocalDateTime entry_date;
-    @Column(nullable = false)
-    LocalDateTime exit_date;
+    @Column(name = "entry_date", nullable = false)
+    LocalDateTime entryDate;
+    @Column(name = "exit_date", nullable = false)
+    LocalDateTime exitDate;
 
-    @AssertTrue(message = "Invalid exit date")
+    @AssertTrue
     public boolean isValid() {
-        return entry_date.isBefore(exit_date) || entry_date.isEqual(exit_date);
+        return entryDate.isBefore(exitDate) || entryDate.isEqual(exitDate);
     }
 }

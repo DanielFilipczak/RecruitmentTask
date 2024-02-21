@@ -2,10 +2,10 @@ package com.example.recruitmenttask.controller;
 
 import com.example.recruitmenttask.model.Parent;
 import com.example.recruitmenttask.service.ParentService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/parents")
@@ -17,18 +17,18 @@ public class ParentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addParent(@RequestBody Parent parent) {
-        parentService.saveParent(parent);
-        return ResponseEntity.created(URI.create("/parents/" + parent.getId())).build();
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Parent addParent(@RequestBody Parent parent) {
+        return parentService.saveParent(parent);
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllParents() {
-        return ResponseEntity.ok(parentService.getAllParents());
+    public List<Parent> getAllParents() {
+        return parentService.getAllParents();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getParentById(@PathVariable Integer id) {
-        return ResponseEntity.ok(parentService.getParentById(id));
+    public Parent getParentById(@PathVariable Integer id) {
+        return parentService.getParentById(id);
     }
 }

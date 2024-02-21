@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ChildService {
 
-    void saveChild(Child child);
+    Child saveChild(Child child);
     List<Child> getAllChildren();
     Child getChildById(Integer id);
 }

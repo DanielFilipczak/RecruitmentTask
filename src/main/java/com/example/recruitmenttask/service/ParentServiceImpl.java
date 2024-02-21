@@ -2,7 +2,9 @@ package com.example.recruitmenttask.service;
 
 import com.example.recruitmenttask.model.Parent;
 import com.example.recruitmenttask.repository.ParentRepo;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,8 +18,8 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public void saveParent(Parent parent) {
-        parentRepo.save(parent);
+    public Parent saveParent(Parent parent) {
+        return parentRepo.save(parent);
     }
 
     @Override
@@ -27,6 +29,7 @@ public class ParentServiceImpl implements ParentService {
 
     @Override
     public Parent getParentById(Integer id) {
-        return parentRepo.findById(id).orElse(null);
+       if(parentRepo.existsById(id)) return parentRepo.findById(id).get();
+       else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid id");
     }
 }
